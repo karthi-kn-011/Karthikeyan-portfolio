@@ -1,0 +1,569 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+html.dark {
+  --bg: #070709;
+  --fg: #e8e8ee;
+  --muted: #9a9aab;
+  --line: rgba(255, 255, 255, 0.08);
+
+  /* ink RGB channels for Tailwind */
+  --color-ink-950: 7 7 9;
+  --color-ink-900: 10 10 15;
+  --color-ink-800: 16 16 23;
+  --color-ink-700: 23 23 34;
+  --color-ink-600: 34 34 47;
+
+  /* Cursor - bright/high-contrast */
+  --cursor-dot: #ffffff;
+  --cursor-ring-border: rgba(255, 255, 255, 0.45);
+  --cursor-ring-bg: rgba(255, 255, 255, 0.08);
+  --cursor-ring-text: #ffffff;
+  --cursor-ring-glow: 0 0 20px rgba(79, 140, 255, 0.3);
+  --cursor-ring-blur: blur(4px);
+  --cursor-bg-glow-gradient: radial-gradient(closest-side, rgba(79, 140, 255, 0.16), transparent);
+}
+
+html.light {
+  --bg: #f8fafc;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --line: rgba(0, 0, 0, 0.08);
+
+  /* ink RGB channels for Tailwind (light surfaces) */
+  --color-ink-950: 248 250 252;
+  --color-ink-900: 255 255 255;
+  --color-ink-800: 241 245 249;
+  --color-ink-700: 226 232 240;
+  --color-ink-600: 203 213 225;
+
+  /* Cursor - refined vivid blue ring with gentle blur and glow */
+  --cursor-dot: #2563eb;
+  --cursor-ring-border: rgba(37, 99, 235, 0.55);
+  --cursor-ring-bg: rgba(37, 99, 235, 0.08);
+  --cursor-ring-text: #1d4ed8;
+  --cursor-ring-glow: 0 0 20px rgba(37, 99, 235, 0.2);
+  --cursor-ring-blur: blur(4px);
+  --cursor-bg-glow-gradient: radial-gradient(closest-side, rgba(59, 130, 246, 0.12), transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+html.light,
+html.light body,
+html.light #root,
+html.light .bg-canvas {
+  background-color: #f8fafc !important;
+  color: #0f172a;
+}
+
+html.dark,
+html.dark body,
+html.dark #root,
+html.dark .bg-canvas {
+  background-color: #070709 !important;
+  color: #e8e8ee;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+@layer base {
+  h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', Inter, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid #4f8cff;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  button, a { -webkit-tap-highlight-color: transparent; }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+  .section {
+    @apply relative py-20 sm:py-28;
+  }
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-accent-blue;
+  }
+  .h2 {
+    @apply mt-3 text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl;
+  }
+  .sub {
+    @apply mt-3 max-w-xl text-base text-zinc-400;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent-blue via-accent-violet to-accent-cyan bg-clip-text text-transparent;
+  }
+  .card {
+    @apply rounded-2xl border border-white/[0.08] bg-ink-900/70;
+  }
+  .btn {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-colors;
+  }
+  .btn-primary {
+    @apply btn bg-white text-ink-950 hover:bg-zinc-200;
+  }
+  .btn-ghost {
+    @apply btn border border-white/15 text-zinc-200 hover:border-white/30 hover:bg-white/5;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] text-zinc-300;
+  }
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 20%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 50% 20%, #000 20%, transparent 75%);
+}
+
+.noise {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.5'/></svg>");
+  opacity: 0.035;
+}
+
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { scrollbar-width: none; }
+
+.flow-line { stroke-dasharray: 4 8; animation: dash 1.4s linear infinite; }
+
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor, html.custom-cursor * { cursor: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ==========================================================================
+   CURSOR THEME SYSTEM
+   ========================================================================== */
+.cursor-dot {
+  background-color: var(--cursor-dot);
+  box-shadow: var(--cursor-ring-glow);
+}
+
+.cursor-ring {
+  border-color: var(--cursor-ring-border);
+  background-color: var(--cursor-ring-bg);
+  color: var(--cursor-ring-text);
+  box-shadow: var(--cursor-ring-glow);
+  -webkit-backdrop-filter: var(--cursor-ring-blur);
+  backdrop-filter: var(--cursor-ring-blur);
+}
+
+/* ==========================================================================
+   LIGHT MODE STYLING SYSTEM
+   ========================================================================== */
+
+/* Background & grid */
+html.light .bg-grid {
+  background-image:
+    linear-gradient(rgba(79, 110, 247, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 110, 247, 0.09) 1px, transparent 1px) !important;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 35%, transparent 85%) !important;
+  mask-image: radial-gradient(ellipse at 50% 30%, #000 35%, transparent 85%) !important;
+}
+
+html.light .noise {
+  opacity: 0.02 !important;
+}
+
+html.light .bg-blob-blue {
+  background: radial-gradient(closest-side, rgba(79, 140, 255, 0.18), transparent) !important;
+  opacity: 0.75 !important;
+}
+
+html.light .bg-blob-violet {
+  background: radial-gradient(closest-side, rgba(139, 92, 246, 0.16), transparent) !important;
+  opacity: 0.65 !important;
+}
+
+html.light .cursor-bg-glow {
+  background: radial-gradient(closest-side, rgba(59, 130, 246, 0.12), transparent) !important;
+}
+
+/* Cards & containers */
+html.light .card,
+html.light article.group,
+html.light .group.rounded-2xl {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+html.light article.group:hover,
+html.light .group.rounded-2xl:hover {
+  border-color: rgba(79, 140, 255, 0.35) !important;
+  box-shadow: 0 12px 32px -4px rgba(79, 140, 255, 0.08);
+}
+
+/* HSDE Hero Card */
+html.light article.md\:col-span-12 {
+  border-color: rgba(79, 140, 255, 0.3) !important;
+  background-image: linear-gradient(135deg, rgba(79, 140, 255, 0.06), rgba(255, 255, 255, 0.98), rgba(139, 92, 246, 0.04)) !important;
+  box-shadow: 0 8px 30px -4px rgba(79, 140, 255, 0.06);
+}
+
+/* HSDE Donation Flow Box */
+html.light .hsde-flow-box {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: #f8fafc !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+/* Preview Diagram Boxes (EMBook & AI Resume) */
+html.light .preview-diagram-box {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: #f1f5f9 !important;
+}
+
+/* Flow steps in Light Mode */
+html.light .flow-step-active {
+  border-color: rgba(79, 140, 255, 0.7) !important;
+  background-color: rgba(79, 140, 255, 0.12) !important;
+  color: #1d4ed8 !important;
+  box-shadow: 0 0 18px -4px rgba(79, 140, 255, 0.35) !important;
+}
+
+html.light .flow-step-inactive {
+  border-color: rgba(0, 0, 0, 0.09) !important;
+  background-color: #ffffff !important;
+  color: #334155 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light .flow-icon {
+  color: #64748b !important;
+}
+
+html.light .flow-connector-line {
+  color: #cbd5e1 !important;
+}
+
+/* Progress bar track */
+html.light .progress-track,
+html.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* EMBook preview */
+html.light .embook-step-active {
+  border-color: rgba(139, 92, 246, 0.6) !important;
+  background-color: rgba(139, 92, 246, 0.12) !important;
+  color: #6d28d9 !important;
+}
+
+html.light .embook-step-inactive {
+  border-color: rgba(0, 0, 0, 0.09) !important;
+  background-color: #ffffff !important;
+  color: #64748b !important;
+}
+
+/* Hospireo preview */
+html.light .hospireo-preview {
+  border-color: rgba(20, 184, 166, 0.25) !important;
+  background-image: linear-gradient(135deg, rgba(20, 184, 166, 0.08), rgba(255, 255, 255, 0.95)) !important;
+}
+
+html.light .hospireo-item {
+  border-color: rgba(0, 0, 0, 0.07) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+/* Building & Status in Light Mode */
+html.light .building-card,
+html.light #building .rounded-3xl,
+html.light .status-card,
+html.light [role="status"] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Contact Card */
+html.light .contact-card {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-image: none !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Contact Inputs */
+html.light input,
+html.light textarea {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+html.light input:focus,
+html.light textarea:focus {
+  background-color: #ffffff !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Approach Section in Light Mode */
+html.light #approach button {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: #ffffff !important;
+}
+html.light #approach button[aria-expanded="true"] {
+  border-color: rgba(79, 140, 255, 0.4) !important;
+  background: linear-gradient(135deg, rgba(79, 140, 255, 0.1), rgba(139, 92, 246, 0.06)) !important;
+}
+
+/* Skills list items in Light Mode */
+html.light #skills li {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: #334155 !important;
+}
+html.light #skills li:hover {
+  background-color: rgba(79, 140, 255, 0.12) !important;
+  border-color: rgba(79, 140, 255, 0.5) !important;
+  color: #1d4ed8 !important;
+}
+
+/* Experience cards in Light Mode */
+html.light #experience .bg-ink-900 {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+html.light #experience .bg-white\/\[0\.08\] {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* About profile card & Achievements in Light Mode */
+html.light #about .bg-ink-900\/80,
+html.light #achievements .bg-ink-900\/60,
+html.light .bg-ink-900,
+html.light .bg-ink-900\/70,
+html.light .bg-ink-900\/80 {
+  background-color: #ffffff !important;
+}
+
+/* Typography in Light Mode */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-zinc-100 {
+  color: #1e293b !important;
+}
+
+html.light .text-zinc-200 {
+  color: #334155 !important;
+}
+
+html.light .text-zinc-300 {
+  color: #475569 !important;
+}
+
+html.light .text-zinc-400 {
+  color: #64748b !important;
+}
+
+html.light .text-zinc-500 {
+  color: #64748b !important;
+}
+
+html.light .text-zinc-600 {
+  color: #94a3b8 !important;
+}
+
+html.light .text-accent-cyan {
+  color: #0284c7 !important;
+}
+
+/* Borders & Dividers */
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/\[0\.08\],
+html.light .border-white\/\[0\.07\],
+html.light .border-white\/\[0\.06\] {
+  border-color: rgba(0, 0, 0, 0.09) !important;
+}
+
+html.light .divide-white\/10 > :not([hidden]) ~ :not([hidden]),
+html.light .divide-white\/\[0\.06\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Buttons */
+html.light .btn-primary {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+html.light .btn-primary:hover {
+  background-color: #1e293b !important;
+}
+
+html.light .btn-ghost {
+  border-color: rgba(0, 0, 0, 0.16) !important;
+  color: #1e293b !important;
+}
+
+html.light .btn-ghost:hover {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Chips & Badges */
+html.light .chip {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: #334155 !important;
+}
+
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/\[0\.06\],
+html.light .bg-white\/\[0\.07\],
+html.light .bg-white\/\[0\.08\] {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Terminal in light mode */
+html.light .terminal-box {
+  background-color: #0b0b12 !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+html.light .terminal-box .text-zinc-200 {
+  color: #e4e4e7 !important;
+}
+
+html.light .terminal-box .text-zinc-400 {
+  color: #a1a1aa !important;
+}
+
+html.light .terminal-box .text-zinc-500 {
+  color: #71717a !important;
+}
+
+html.light .terminal-box input {
+  background-color: transparent !important;
+  color: #e4e4e7 !important;
+}
+
+/* Hero visual satellites in light mode */
+html.light .hero-node-bg {
+  fill: #ffffff !important;
+  stroke: rgba(0, 0, 0, 0.15) !important;
+}
+
+html.light .hero-node-text {
+  fill: #0f172a !important;
+}
+
+/* Navbar in Light Mode */
+html.light header nav.border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light header nav a,
+html.light header nav button {
+  color: #334155;
+}
+
+html.light header nav button:hover,
+html.light header nav a:hover {
+  color: #0f172a;
+}
+
+/* Mobile Menu in Light Mode */
+html.light #mobile-menu {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1) !important;
+}
+
+html.light #mobile-menu button {
+  color: #334155 !important;
+}
+
+html.light #mobile-menu button:hover {
+  color: #0f172a !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light #mobile-menu .btn-primary {
+  color: #ffffff !important;
+  background-color: #0f172a !important;
+}
+
+/* Modals in light mode */
+html.light #resume-modal-dialog,
+html.light [role="dialog"].bg-ink-900 {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Smooth theme transitions */
+body,
+.card,
+.btn,
+.chip,
+input,
+textarea,
+header nav,
+article.group,
+.hsde-flow-box,
+.contact-card {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
